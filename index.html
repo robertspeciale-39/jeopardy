@@ -975,6 +975,125 @@ const SETS = [
     why: 'Critical networks facing novel attacks benefit from combining both methods, at a higher cost and alert volume.', ek: '3.5.C.3 · 3.5.D.2'
   }
 }
+,{
+  id: 'cyber2-routing-wan',
+  tab: 'Cyber 2: Routing and WAN Tech',
+  tag: 'CYBER 2 · ROUTING AND WAN TECH',
+  title: 'Cyber 2: Routing and WAN Tech',
+  ekLabel: '',
+  values: [100, 200, 300, 400, 500],
+  categories: [
+    { name: 'Routing Basics', topic: 'U5 · Routing', clues: [
+      { q: 'A router’s essential job is to look at this part of an incoming packet to decide which network door to send it through.',
+        a: 'The destination IP address', choices: ['The destination IP address', 'The source MAC address', 'The packet’s payload size', 'The VLAN tag on the switch port'], correct: 0,
+        why: 'Routers compare the destination IP to their routing table to pick the next hop.', ek: 'Routing Protocols · Rules of the Grid' },
+      { q: 'A router receives a packet for a network that is not in its routing table and has no route to forward it. What does it do with the packet?',
+        a: 'Drops it', choices: ['Drops it', 'Broadcasts it out every port', 'Sends it back to the sender’s MAC address', 'Holds it until an admin adds a route'], correct: 0,
+        why: 'With no matching route, the router drops the packet because it has no routing information for the destination network.', ek: 'Routing Protocols · Rules of the Grid' },
+      { q: 'In this type of routing, a network admin enters each route by hand, and the routes never change unless the admin changes them.',
+        a: 'Static routing', choices: ['Static routing', 'Dynamic routing', 'Convergence routing', 'Subinterface routing'], correct: 0,
+        why: 'Static routing is “Manual Override”: predictable and secure, but all the work lands on the admin.', ek: 'Routing Protocols · Static Routing' },
+      { q: 'A branch office is a stub network with only one path out to the internet. Which routing type is the best fit?',
+        a: 'Static routing', choices: ['Static routing', 'BGP between every branch', 'OSPF with a full network map', 'NAT64'], correct: 0,
+        why: 'A stub network is a literal dead end, so a single manual route out is simple and needs no route sharing.', ek: 'Routing Protocols · Best Use Cases' },
+      { q: 'Static routing has these two downsides, which make it a poor fit for large or growing networks.',
+        a: 'Heavy admin workload and easy human error', choices: ['Heavy admin workload and easy human error', 'High CPU use and constant route sharing', 'Routes that change without warning', 'Exposing routes to outside attackers'], correct: 0,
+        why: 'Every change must be made by hand on each router, and one bad route can cause issues or crash a network. High CPU use is a dynamic routing downside.', ek: 'Routing Protocols · Static Routing Stats' }
+    ]},
+    { name: 'Dynamic Routing', topic: 'U5 · Routing', clues: [
+      { q: 'This is the “Autopilot” mode of routing, where routers exchange information with each other to keep their routing tables up to date automatically.',
+        a: 'Dynamic routing', choices: ['Dynamic routing', 'Static routing', 'Port security', 'Split tunneling'], correct: 0,
+        why: 'Dynamic routing needs no manual setup for every network change, so it suits large or constantly changing networks.', ek: 'Routing Protocols · Dynamic Routing' },
+      { q: 'When a link fails or a new router is added, dynamic routers recalculate their paths automatically. What is this self-healing process called?',
+        a: 'Convergence', choices: ['Convergence', 'Redundancy', 'Encapsulation', 'Segmentation'], correct: 0,
+        why: 'Convergence is the special move of dynamic routing: routers agree on the new best paths without human help.', ek: 'Routing Protocols · Dynamic Routing' },
+      { q: 'A network admin wants to know why a large company avoids dynamic routing on a tiny, rarely changing network. Which downside of dynamic routing explains it?',
+        a: 'It is resource heavy, needing substantial CPU and RAM, and takes time to configure', choices: ['It is resource heavy and takes time to configure', 'It cannot adapt to link failures', 'It requires an admin to edit every route by hand', 'It cannot scale past a few routers'], correct: 0,
+        why: 'Dynamic protocols constantly calculate routes, which costs CPU and memory. That is overkill for a small, stable network.', ek: 'Routing Protocols · Dynamic Routing Stats' },
+      { q: 'If it is not protected, this security risk of dynamic routing lets attackers feed routers bad information.',
+        a: 'Attackers could send false route updates', choices: ['Attackers could send false route updates', 'Routes stay hidden from every router', 'The routing table can never be changed', 'Packets are always dropped'], correct: 0,
+        why: 'Routers trust the updates they receive, so unprotected protocols can be tricked into accepting false routes.', ek: 'Routing Protocols · Dynamic Routing Stats' },
+      { q: 'Compared to static routing, dynamic routing makes it easier to do this as a network grows and changes.',
+        a: 'Scale, with less manual work and a lower risk of human error', choices: ['Scale, with less manual work and a lower risk of human error', 'Hide all routes from outsiders', 'Skip the routing table entirely', 'Avoid using any CPU or RAM'], correct: 0,
+        why: 'Dynamic routing updates routing tables automatically, which is its biggest advantage for large or rapidly growing networks.', ek: 'Routing Protocols · Dynamic Routing Stats' }
+    ]},
+    { name: 'The Protocol Roster', topic: 'U5 · Routing', clues: [
+      { q: 'This protocol is called “The Heavyweight.” It is an Exterior Gateway Protocol that routes between Autonomous Systems and runs the massive internet networks.',
+        a: 'BGP (Border Gateway Protocol)', choices: ['BGP', 'EIGRP', 'OSPF', 'FHRP'], correct: 0,
+        why: 'BGP is a path vector protocol that handles massive networks, but it suffers from slow convergence.', ek: 'Routing Protocols · Dynamic Roster' },
+      { q: 'This protocol is called “The Cartographer.” It is an interior, link-state protocol that shares link-state information so each router can build a complete map of the network.',
+        a: 'OSPF (Open Shortest Path First)', choices: ['OSPF', 'BGP', 'EIGRP', 'NAT'], correct: 0,
+        why: 'OSPF uses a hierarchical design to keep routing tables small and is widely supported across vendors.', ek: 'Routing Protocols · Dynamic Roster' },
+      { q: 'This protocol is called “The Cisco Sprinter.” It is an interior, hybrid protocol known for being extremely fast and flexible, and it combines bandwidth, delay, load, and reliability as its metric.',
+        a: 'EIGRP (Enhanced Interior Gateway Routing Protocol)', choices: ['EIGRP', 'OSPF', 'BGP', 'VRRP'], correct: 0,
+        why: 'EIGRP can even load balance across unequal-cost paths, but it is generally used within a single organization.', ek: 'Routing Protocols · Dynamic Roster' },
+      { q: 'An IGP and an EGP are both routing protocols. Which statement correctly sorts BGP, EIGRP, and OSPF?',
+        a: 'BGP is an EGP; EIGRP and OSPF are IGPs', choices: ['BGP is an EGP; EIGRP and OSPF are IGPs', 'OSPF is an EGP; BGP and EIGRP are IGPs', 'All three are EGPs', 'EIGRP is an EGP; BGP and OSPF are IGPs'], correct: 0,
+        why: 'BGP connects separate Autonomous Systems (exterior), while EIGRP and OSPF route inside an organization (interior).', ek: 'Routing Protocols · Dynamic Roster' },
+      { q: 'An ISP needs to exchange routes with other ISPs across the internet, and slow convergence is an acceptable price. Which protocol is the right choice?',
+        a: 'BGP', choices: ['BGP', 'OSPF', 'EIGRP', 'A static route on every router'], correct: 0,
+        why: 'Between Autonomous Systems, BGP is the only exterior gateway protocol of the three. OSPF and EIGRP are interior protocols.', ek: 'Routing Protocols · Dynamic Roster' }
+    ]},
+    { name: 'Route Selection', topic: 'U5 · Routing', clues: [
+      { q: 'Every route is recorded with this number showing how trusted it is. A lower number means the route is more trusted.',
+        a: 'Administrative Distance (AD)', choices: ['Administrative Distance (AD)', 'Prefix length', 'Convergence time', 'Subnet mask'], correct: 0,
+        why: 'Administrative Distance ranks the trustworthiness of the source of a route. Lower AD wins.', ek: 'Routing Protocols · Trust Leaderboard' },
+      { q: 'Put these in order of trust, from most trusted (lowest AD) to least trusted: directly connected, static route, EIGRP, OSPF.',
+        a: 'Directly connected, static route, EIGRP, OSPF', choices: ['Directly connected, static route, EIGRP, OSPF', 'Static route, directly connected, OSPF, EIGRP', 'Directly connected, OSPF, EIGRP, static route', 'EIGRP, OSPF, static route, directly connected'], correct: 0,
+        why: 'The leaderboard is Connected (0), Static (1), BGP (20), EIGRP (90), OSPF (110).', ek: 'Routing Protocols · Trust Leaderboard' },
+      { q: 'A router has routes to 192.168.1.0/24 and 192.168.0.0/16 in its table for a packet headed to 192.168.1.50. Which route does it use, and why?',
+        a: 'The /24 route, because the longer prefix is the more specific match', choices: ['The /24 route, because the longer prefix is the more specific match', 'The /16 route, because it covers more addresses', 'The /16 route, because it was added first', 'Neither; the packet is dropped'], correct: 0,
+        why: 'The Precision Rule: a longer prefix equals a more specific route, and a more specific route is a better match.', ek: 'Routing Protocols · Route Selection' },
+      { q: 'Two routes to the same network were learned by the same routing protocol. The router compares their metrics (based on link speed or hop count). Which route wins?',
+        a: 'The route with the lower metric', choices: ['The route with the lower metric', 'The route with the higher metric', 'The route with the larger AD', 'The route with the shorter prefix'], correct: 0,
+        why: 'The Efficiency Rule: a lower metric always equals a better route.', ek: 'Routing Protocols · Route Selection' },
+      { q: 'A router needs to reach 10.10.20.0/24 and has routes from a static entry, EIGRP, and OSPF. Which route does it pick first, and what happens if that route fails?',
+        a: 'Static (AD 1) first; if it fails, the router falls back to EIGRP (AD 90)', choices: ['Static (AD 1) first, then EIGRP (AD 90)', 'OSPF (AD 110) first, then static', 'EIGRP (AD 90) first, then OSPF', 'Static (AD 1) first, then OSPF (AD 110)'], correct: 0,
+        why: 'The lowest AD wins. When the static route is removed, EIGRP’s AD of 90 beats OSPF’s 110.', ek: 'Routing Protocols · Trust Leaderboard' }
+    ]},
+    { name: 'FHRP, VLANs & Subinterfaces', topic: 'U5L3', clues: [
+      { q: 'The PCs on a network use Router A as their default gateway. If Router A fails, they lose access to everything outside the network. Which kind of protocol keeps the default gateway available when a device fails?',
+        a: 'A First Hop Redundancy Protocol (FHRP)', choices: ['A First Hop Redundancy Protocol (FHRP)', 'A Network Address Translation protocol', 'A VLAN trunking protocol', 'A static route'], correct: 0,
+        why: 'FHRPs let multiple routers or switches share the job of the default gateway so the network stays up.', ek: 'U5L3 · FHRP' },
+      { q: 'This shared address is not tied to just one router, so devices can use it as their default gateway even when the router behind it changes.',
+        a: 'A Virtual IP (VIP) address', choices: ['A Virtual IP (VIP) address', 'A private IP address', 'A broadcast address', 'A subinterface address'], correct: 0,
+        why: 'A VIP is shared for high availability and helps with both redundancy and load balancing.', ek: 'U5L3 · VIP' },
+      { q: 'Router A holds the VIP as the Active router, and Router B is the Standby. Router A crashes. What happens next?',
+        a: 'The FHRP reassigns the VIP to Router B, which becomes the Active router', choices: ['The FHRP reassigns the VIP to Router B, which becomes Active', 'Every PC must be reconfigured with Router B’s IP', 'The VIP is deleted until Router A returns', 'Router B drops all traffic'], correct: 0,
+        why: 'PCs keep using the same VIP, so the failover is automatic and users never change a setting.', ek: 'U5L3 · FHRP + VIP' },
+      { q: 'Devices in different VLANs cannot talk to each other without help from this device.',
+        a: 'A router', choices: ['A router', 'A hub', 'A patch panel', 'Another VLAN on the same switch'], correct: 0,
+        why: 'Each VLAN is its own mini-network, so traffic between VLANs must be routed. VLANs also improve security and organization.', ek: 'U5L3 · VLANs' },
+      { q: 'One router port and one cable connect to a switch carrying VLANs 10, 20, and 30. A router port is split into virtual ports named Gig0/1.10, Gig0/1.20, and Gig0/1.30. What are these virtual ports called, and what does each do?',
+        a: 'Subinterfaces; each acts as the gateway for its VLAN', choices: ['Subinterfaces; each acts as the gateway for its VLAN', 'VIPs; each load balances a different router', 'Trunk ports; each encrypts a different VLAN', 'Standby ports; each replaces a failed router'], correct: 0,
+        why: 'A subinterface gives each VLAN its own “lane” with its own IP address and configuration over a single physical cable.', ek: 'U5L3 · Subinterfaces' }
+    ]},
+    { name: 'NAT', topic: 'U5L4', clues: [
+      { q: 'IPv4 has only about 4.3 billion addresses and we have run out. Organizations get around this by using these address ranges inside their networks, which cannot be routed on the internet.',
+        a: 'Private IP address ranges', choices: ['Private IP address ranges', 'Broadcast address ranges', 'Virtual IP address ranges', 'Link-local address ranges'], correct: 0,
+        why: 'Private ranges are 10.0.0.0/8, 172.16.0.0 to 172.31.255.255, and 192.168.0.0/16.', ek: 'U5L4 · Why NAT' },
+      { q: 'Which of these addresses is a private IPv4 address?',
+        a: '172.20.5.9', choices: ['172.20.5.9', '172.32.5.9', '94.1.1.1', '192.169.1.1'], correct: 0,
+        why: '172.16.0.0 to 172.31.255.255 is private, so 172.20.5.9 is private. 172.32.x.x, 192.169.x.x, and 94.1.1.1 are all public.', ek: 'U5L4 · Private ranges' },
+      { q: 'Sasha’s PC at 10.10.20.50 visits a website. The router changes the source IP on her packet to 94.1.1.1. What is this process called, and what does the router record?',
+        a: 'NAT; it records the translation in a NAT table so replies reach Sasha', choices: ['NAT; it records the translation in a NAT table', 'DHCP; it records a lease in a lease table', 'ARP; it records Sasha’s MAC in an ARP table', 'VLAN tagging; it records the tag in a trunk table'], correct: 0,
+        why: 'NAT changes the source IP on outgoing packets and uses the NAT table to send replies back to the right internal device.', ek: 'U5L4 · How NAT Works' },
+      { q: 'A company’s web server must always be reachable at the same public address. Which type of NAT matches one private IP to one fixed public IP?',
+        a: 'Static NAT', choices: ['Static NAT', 'Dynamic NAT', 'A subinterface', 'An FHRP'], correct: 0,
+        why: 'Static NAT gives a device a consistent public identity, which is common for web servers and other always-reachable devices.', ek: 'U5L4 · Types of NAT' },
+      { q: 'This type of NAT maps private IPs to a pool of public IPs, so the public IP a device uses may change. What is its limitation?',
+        a: 'Dynamic NAT; it only works if enough public IPs are in the pool', choices: ['Dynamic NAT; it only works if there are enough public IPs in the pool', 'Static NAT; it needs a new private IP every day', 'Dynamic NAT; it can only translate one device at a time', 'Static NAT; it cannot work with servers'], correct: 0,
+        why: 'Both static and dynamic NAT use one-to-one mapping, so each active device needs its own public IP from the pool.', ek: 'U5L4 · Types of NAT' }
+    ]}
+  ],
+  final: {
+    category: 'Putting It All Together',
+    q: 'A school network has an Active and a Standby router sharing one VIP as the default gateway. Students on VLANs 10, 20, and 30 reach the internet through one router port with subinterfaces. Static routes connect the main office, but the district adds a large number of new campuses every year. Which routing approach should it move to for the campuses, and why?',
+    a: 'Dynamic routing (such as OSPF), because it scales and adapts to changes automatically, with less manual work and a lower risk of human error',
+    choices: ['Dynamic routing (such as OSPF) for scale and automatic updates', 'More static routes, because they scale best', 'A VIP on every student PC', 'NAT on every router instead of routing'], correct: 0,
+    why: 'Static routing becomes an admin workload and a source of human error as a network grows. Dynamic routing adapts through convergence, at the cost of more CPU and RAM.', ek: 'U5 · Routing Protocols + U5L3 + U5L4'
+  }
+}
 ];
 
 
@@ -1308,7 +1427,7 @@ function renderClue() {
   }
 
   const revealed = CUR.stage === 'reveal';
-  c.append(metaRow(h('span', { class: 'pill pill-accent' }, 'EK ' + clue.ek)));
+  c.append(metaRow(h('span', { class: 'pill pill-accent' }, (SET.ekLabel ?? 'EK ') + clue.ek)));
   if (!revealed) { const t = timerEl(G.opts.timer); if (t) c.append(t); }
   c.append(h('h2', { class: 'clue-text' + (revealed ? ' small' : ''), id: 'clue-heading' }, clue.q));
   if (clue.log) c.append(h('pre', { class: 'clue-log', tabindex: '0', 'aria-label': 'Evidence' }, clue.log));
@@ -1450,7 +1569,7 @@ function renderFinal() {
   c.append(h('div', { class: 'clue-meta' },
     h('span', { class: 'pill pill-primary' }, 'FINAL JEOPARDY'),
     h('span', { class: 'pill pill-primary' }, F.category.toUpperCase()),
-    h('span', { class: 'pill pill-accent' }, 'EK ' + F.ek)));
+    h('span', { class: 'pill pill-accent' }, (SET.ekLabel ?? 'EK ') + F.ek)));
   if (!revealed) { const t = timerEl(G.opts.timer || 30); if (t) c.append(t); }
   c.append(h('h2', { class: 'clue-text' + (revealed ? ' small' : ''), id: 'clue-heading' }, F.q));
 
